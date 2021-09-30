@@ -9,7 +9,7 @@ SCALE = 9    #8+1
 
 #---------------prepare image----------------
 
-im = Image.open("c1.jpg")
+im = Image.open("aa.jpg")
 img = np.array(im)
 img1 = np.array(im)
 img1[:,:,0] = img[:,:,2]
@@ -17,6 +17,7 @@ img1[:,:,1] = img[:,:,1]
 img1[:,:,2] = img[:,:,0]
 img1 = img1 /255
 
+img1 = cv2.resize(img1, (0, 0), fx=0.5, fy=0.5)
 print(img1.shape)
 
 #-----------------------initial map image---------------
@@ -36,17 +37,17 @@ for i in range(img1.shape[0]):
             for l in range( SCALE):
                 map1[i*SCALE+k , j*SCALE+l , :] = img1[i , j , :]
                 if(l==SCALE -1 or k == SCALE -1):
-                    map1[i*SCALE+k , j*SCALE+l , :] = 1
+                    map1[i*SCALE+k , j*SCALE+l , :] = 0
                     if(i % 10 == 0 ):
                         map1[i*SCALE , j*SCALE+l , :] = 0
-                        map1[i*SCALE , j*SCALE+l , 0] = 1
+                        map1[i*SCALE , j*SCALE+l , 1] = 1
                     if( j % 10 == 0):
                         map1[i*SCALE+k , j*SCALE , :] = 0
-                        map1[i*SCALE+k , j*SCALE , 0] = 1
+                        map1[i*SCALE+k , j*SCALE , 1] = 1
         
      
 
-cv2.imwrite('x.jpg',map1*255) 
+cv2.imwrite('w.jpg',map1*255) 
 
 cv2.imshow('norm1',map1)
 
